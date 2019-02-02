@@ -9,32 +9,32 @@ type Node struct {
 
 type List struct {
 	length int
-	head *Node
+	head   *Node
+	tail   *Node
 }
 
-func (list *List) add(node *Node)  {
+func (list *List) Add(node *Node) {
 
-	if list.length == 0{
+	if list.length == 0 {
 		list.head = node
-	}else {
-		curNode := list.head
-		for curNode.next != nil{
-			curNode = curNode.next
-		}
+		list.tail = node
+	} else {
+		curNode := list.tail
 		curNode.next = node
+		list.tail = node
 	}
 
 	list.length++
 }
 
-func (list *List) remove(post string)  {
+func (list *List) Remove(post string) {
 	curNode := list.head
 	var prevNode *Node
 
 	if curNode.Post == post {
 		list.head = curNode.next
 	} else {
-		for curNode.Post != post{
+		for curNode.Post != post {
 			prevNode = curNode
 			curNode = curNode.next
 		}
@@ -44,19 +44,39 @@ func (list *List) remove(post string)  {
 	list.length--
 }
 
+func (list *List) IsEmpty() bool {
+	return list.length == 0
+}
+
 func main() {
 	list := List{}
 	node1 := Node{"Post 1", nil}
 	node2 := Node{"Post 2", nil}
 	node3 := Node{"Post 3", nil}
-	list.add(&node1)
-	list.add(&node2)
-	list.add(&node3)
 
-	n := list.head
+	fmt.Println(list.IsEmpty())
 
-	for n.next != nil{
-		fmt.Println(n.next)
-		n = n.next
+	list.Add(&node1)
+	list.Add(&node2)
+	list.Add(&node3)
+
+	fmt.Println(list.IsEmpty())
+
+	loopList(list.head)
+
+	list.Remove("Post 2")
+
+	loopList(list.head)
+}
+
+func loopList(head *Node) {
+	fmt.Println("-----Start loop-----")
+	for {
+		fmt.Println(head)
+		if head.next == nil {
+			break
+		}
+		head = head.next
 	}
+	fmt.Println("-----End loop-----")
 }
