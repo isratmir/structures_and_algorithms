@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 type Node struct {
 	Post string
@@ -11,10 +14,11 @@ type List struct {
 	length int
 	head   *Node
 	tail   *Node
+	lock   sync.Mutex
 }
 
 func (list *List) Add(node *Node) {
-
+	list.lock.Lock()
 	if list.length == 0 {
 		list.head = node
 		list.tail = node
@@ -25,9 +29,11 @@ func (list *List) Add(node *Node) {
 	}
 
 	list.length++
+	list.lock.Unlock()
 }
 
 func (list *List) Remove(post string) {
+	list.lock.Lock()
 	curNode := list.head
 	var prevNode *Node
 
@@ -42,6 +48,7 @@ func (list *List) Remove(post string) {
 		prevNode.next = curNode.next
 	}
 	list.length--
+	list.lock.Unlock()
 }
 
 func (list *List) IsEmpty() bool {
