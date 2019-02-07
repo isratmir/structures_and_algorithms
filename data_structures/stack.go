@@ -23,9 +23,6 @@ func (s *Stack) Pop() {
 }
 
 func (s *Stack) Pip() {
-	/*for _, v := range s.Books{
-		fmt.Println(v)
-	}*/
 	fmt.Println(s)
 }
 
