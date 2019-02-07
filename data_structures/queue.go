@@ -31,6 +31,10 @@ func (c *Conveior) isEmpty() bool {
 	return c.length == 0
 }
 
+func (c *Conveior) Front() Product {
+	return c.Products[0]
+}
+
 func main() {
 	conveior := Conveior{}
 
@@ -42,6 +46,8 @@ func main() {
 	conveior.Enqueue(prod3)
 
 	fmt.Println(conveior)
+	fmt.Println(conveior.Front())
 	conveior.Dequeue()
 	fmt.Println(conveior)
+	fmt.Println(conveior.Front())
 }
